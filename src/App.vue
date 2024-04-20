@@ -1,15 +1,15 @@
 <template>
-  <v-app>
-    <PokeCard/>
-  </v-app>
+  <div class="app">
+    <PokeList />
+  </div>
 </template>
 
-<script setup>
-import PokeCard from './components/PokeCard.vue';
-</script>
-
 <script>
+import PokeList from './components/PokeList.vue';
+
 export default {
-  name: 'App'
-}
+  components: {
+    PokeList,
+  },
+};
 </script>
