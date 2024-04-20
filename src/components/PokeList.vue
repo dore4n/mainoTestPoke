@@ -1,31 +1,45 @@
 <template>
-  <div class="pokedex-container">
-    <v-text-field v-model="search" label="Search"></v-text-field>
-    <v-data-table-virtual
-      :headers="headers"
-      :items="filteredPokemons"
-      :item-key="pokemon => pokemon.id"
-      @click:row="openPokemonCard"
-    >
-      <template slot="item.name">{{ pokemon.name }}</template>
-      <template slot="item.id">{{ pokemon.id }}</template>
-      <template slot="item.image">
-        <v-img :src="pokemon.sprites.front_default" width="30"></v-img>
-      </template>
-    </v-data-table-virtual>
-  </div>
-  <pokemon-dialog :dialog.sync="dialog" :pokemon="selectedPokemon" />
+  <v-app> <!-- Adicione esta tag -->
+    <div>
+      <v-app-bar app color="primary" dark>
+        <v-text-field
+          v-model="search"
+          label="Search"
+          class="mx-4"
+        ></v-text-field>
+      </v-app-bar>
+
+      <v-data-table
+        :headers="headers"
+        :items="filteredPokemons"
+        @click:row="openPokemonCard"
+      >
+        <template v-slot:item.sprites="{ item }">
+          <v-img :src="item.sprites.front_default"></v-img>
+        </template>
+      </v-data-table>
+
+      <PokeCard :dialog="dialog" :pokemon="selectedPokemon" @update:dialog="dialog = $event"></PokeCard>
+    </div>
+  </v-app> <!-- Feche a tag aqui -->
 </template>
+
 
 <script>
 import { computed, onMounted, ref } from 'vue';
 import api from "@/service/api";
+import PokeCard from './PokeCard.vue';
 
 export default {
-  name: "PokeCard",
+  name: "PokeList",
+  components: {
+    PokeCard
+  },
   setup() {
     const pokemons = ref([]);
     const search = ref("");
+    const dialog = ref(false);
+    const selectedPokemon = ref(null);
 
     const headers = [
       { text: 'ID', value: 'id' },
@@ -34,47 +48,34 @@ export default {
     ];
 
     const fetchPokemons = async () => {
-      try {
-        const response = await api.get("/pokemon?limit=1000");
-        pokemons.value = response.data.results.map(pokemon => ({
-          ...pokemon,
-          id: pokemon.url.split('/').filter(Boolean).pop()
+        const response = await api.get("/pokemon?limit=100");
+        const pokemonDetails = await Promise.all(response.data.results.map(async pokemon => {
+          const detailedResponse = await api.get(`/pokemon/${pokemon.name}`);
+          return { ...detailedResponse.data, id: pokemon.url.split('/').filter(Boolean).pop() };
         }));
-      } catch (error) {
-        console.error("Failed to fetch pokemons:", error);
-      }
+        pokemons.value = pokemonDetails;
     };
 
     onMounted(fetchPokemons);
 
     const filteredPokemons = computed(() => {
-      if (!search.value) {
-        return pokemons.value;
-      }
-      return pokemons.value.filter(pokemon =>
-        pokemon.name.toLowerCase().includes(search.value.toLowerCase())
-      );
+      return search.value ? pokemons.value.filter(pokemon => pokemon.name.toLowerCase().includes(search.value.toLowerCase())) : pokemons.value;
     });
+
+    const openPokemonCard = (pokemon) => {
+      dialog.value = true;
+      selectedPokemon.value = pokemon;
+    };
 
     return {
       pokemons,
       search,
       headers,
-      fetchPokemons,
       filteredPokemons,
+      openPokemonCard,
+      selectedPokemon,
+      dialog,
     };
-  },
-  data() {
-    return {
-      dialog: false,
-      selectedPokemon: null,
-    };
-  },
-  methods: {
-    openPokemonCard(pokemon) {
-      this.dialog = true;
-      this.selectedPokemon = pokemon;
-    },
   },
 };
 </script>
