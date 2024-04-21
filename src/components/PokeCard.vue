@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="localDialog" width="500">
-    <v-card>
-      <v-img :src="pokemon.sprites.front_default" height="200px"></v-img>
+    <v-card v-if="pokemon">
+      <v-img :src="pokemon.sprites.front_default" height="50px"></v-img>
       <v-card-title>{{ pokemon.name }}</v-card-title>
       <v-card-subtitle>ID: {{ pokemon.id }}</v-card-subtitle>
       <v-card-text>
@@ -25,13 +25,10 @@
 <script>
 export default {
   props: {
-    dialog: {
-      type: Boolean,
-      required: true,
-    },
+    dialog: Boolean,
     pokemon: {
       type: Object,
-      required: true,
+      default: () => ({})
     },
   },
   computed: {
