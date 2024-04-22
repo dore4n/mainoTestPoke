@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Pokédex</v-toolbar-title>
+    <v-app-bar>
+      <v-toolbar-title><img src="../assets/logo.png" style="max-width: 30px;" alt=""></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
@@ -93,7 +93,7 @@ export default {
     onMounted(fetchPokemons);
 
     const filteredPokemons = computed(() => {
-      const uniqueIds = new Set();  // Set para armazenar os IDs únicos dos Pokémons
+      const uniqueIds = new Set();
       return pokemons.value.filter(pokemon => {
         const includesSearch = (
           `${pokemon.id}`.includes(search.value) ||
@@ -101,7 +101,6 @@ export default {
           pokemon.type.toLowerCase().includes(search.value.toLowerCase()) ||
           pokemon.species.toLowerCase().includes(search.value.toLowerCase())
         );
-        // Verifica se o Pokémon já está no Set, se não estiver e corresponder à busca, adiciona ao Set e retorna true
         if (includesSearch && !uniqueIds.has(pokemon.id)) {
           uniqueIds.add(pokemon.id);
           return true;
