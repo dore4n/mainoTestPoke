@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar>
-      <v-toolbar-title><img src="../assets/logo.png" style="max-width: 30px;" alt=""></v-toolbar-title>
+      <v-toolbar-title><img src="../assets/logo.png" style="max-width: 30px;" alt=""> PokeDéx</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
