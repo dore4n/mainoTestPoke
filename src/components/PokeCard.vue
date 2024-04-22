@@ -36,7 +36,7 @@
         <div style="font-size: 2vh; font-weight: bold; padding: 0px 0px 10px 0px;">Sprites:</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;">
           <div v-for="sprite in Object.values(pokemon.sprites).filter(s => typeof s === 'string')" :key="sprite">
-            <v-img v-show="sprite" :src="sprite" height="50px"></v-img>
+            <v-img v-show="sprite" :src="sprite" height="60px"></v-img>
           </div>
         </div>
         <div style="font-size: 2vh; font-weight: bold;">Games:</div>
