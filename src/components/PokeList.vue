@@ -5,7 +5,7 @@
       <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
-        label="Nome ou número"
+        label="Name, id, type or species"
         class="mx-4"
         :style="{ width: '300px' }"
         solo
@@ -13,7 +13,6 @@
         clearable
       ></v-text-field>
     </v-app-bar>
-
     <v-container fluid class="pa-0 pokemon-container">
       <v-row>
         <v-col
@@ -54,7 +53,7 @@ export default {
   components: {
     PokeCard
   },
-  setup() {
+  setup({ emit }) {
     const pokemons = ref([]);
     const search = ref("");
     const dialog = ref(false);
@@ -69,10 +68,12 @@ export default {
           const details = await api.get(`/pokemon/${p.name}`);
           return {
             id: details.data.id,
-            name: details.data.name,
+            name: firstLetterUpperCase(details.data.name),
             type: details.data.types.map(t => t.type.name).join(', '),
             species: details.data.species.name,
-            sprites: details.data.sprites
+            sprites: details.data.sprites,
+            moves: details.data.moves.map(m => m.move.name).join(', '),
+            games: details.data.game_indices.map(g => g.version.name).join(', ')
           };
         });
         const results = await Promise.all(data);
@@ -82,13 +83,31 @@ export default {
         console.error('Failed to fetch pokemons:', error);
       }
     };
+
+    watch(search, () => {
+      pokemons.value = [];
+      offset = 0;
+      fetchPokemons();
+    }, { deep: true });
+
     onMounted(fetchPokemons);
 
     const filteredPokemons = computed(() => {
-      return pokemons.value.filter(pokemon =>
-        (search.value.startsWith('#') && `${pokemon.id}` === search.value.substring(1)) ||
-        (!search.value.startsWith('#') && pokemon.name.toLowerCase().includes(search.value.toLowerCase()))
-      );
+      const uniqueIds = new Set();  // Set para armazenar os IDs únicos dos Pokémons
+      return pokemons.value.filter(pokemon => {
+        const includesSearch = (
+          `${pokemon.id}`.includes(search.value) ||
+          pokemon.name.toLowerCase().includes(search.value.toLowerCase()) ||
+          pokemon.type.toLowerCase().includes(search.value.toLowerCase()) ||
+          pokemon.species.toLowerCase().includes(search.value.toLowerCase())
+        );
+        // Verifica se o Pokémon já está no Set, se não estiver e corresponder à busca, adiciona ao Set e retorna true
+        if (includesSearch && !uniqueIds.has(pokemon.id)) {
+          uniqueIds.add(pokemon.id);
+          return true;
+        }
+        return false;
+      });
     });
 
     function selectPokemon(pokemon) {
@@ -100,6 +119,10 @@ export default {
       if (side === 'end') {
         fetchPokemons().then(() => done());
       }
+    }    
+
+    function firstLetterUpperCase(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     return {
