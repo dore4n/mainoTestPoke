@@ -1,79 +1,139 @@
-# Vuetify (Default)
+# 🐾 mainoTestPoke - Pokedex Vue + Vuetify
 
-This is the official scaffolding tool for Vuetify, designed to give you a head start in building your new Vuetify application. It sets up a base template with all the necessary configurations and standard directory structure, enabling you to begin development without the hassle of setting up the project from scratch.
+Este é um projeto de Pokedex desenvolvido em Vue 3 com Vuetify, utilizando a API pública [PokeAPI](https://pokeapi.co/) para listar e buscar informações sobre Pokémon. A aplicação inclui funcionalidades como scroll infinito, design responsivo e integração com a PokeAPI para exibição dinâmica de dados.
 
-## ❗️ Important Links
+---
 
-- 📄 [Docs](https://vuetifyjs.com/)
-- 🚨 [Issues](https://issues.vuetifyjs.com/)
-- 🏬 [Store](https://store.vuetifyjs.com/)
-- 🎮 [Playground](https://play.vuetifyjs.com/)
-- 💬 [Discord](https://community.vuetifyjs.com)
+## 🚀 Funcionalidades
 
-## 💿 Install
+- **Listagem de Pokémon**: Exibe uma lista paginada e infinita de Pokémon utilizando **vue3-infinite-loading**.
+- **Detalhes do Pokémon**: Consulta e exibe informações detalhadas de cada Pokémon.
+- **Interface moderna**: Desenvolvido com **Vuetify** para um design elegante e responsivo.
+- **Busca otimizada**: Permite busca direta por nome ou ID do Pokémon.
 
-Set up your project using your preferred package manager. Use the corresponding command to install the dependencies:
+---
 
-| Package Manager                                                | Command        |
-|---------------------------------------------------------------|----------------|
-| [yarn](https://yarnpkg.com/getting-started)                   | `yarn install` |
-| [npm](https://docs.npmjs.com/cli/v7/commands/npm-install)     | `npm install`  |
-| [pnpm](https://pnpm.io/installation)                          | `pnpm install` |
-| [bun](https://bun.sh/#getting-started)                        | `bun install`  |
+## 📂 Estrutura do Projeto
 
-After completing the installation, your environment is ready for Vuetify development.
-
-## ✨ Features
-
-- 🖼️ **Optimized Front-End Stack**: Leverage the latest Vue 3 and Vuetify 3 for a modern, reactive UI development experience. [Vue 3](https://v3.vuejs.org/) | [Vuetify 3](https://vuetifyjs.com/en/)
-- 🗃️ **State Management**: Integrated with [Pinia](https://pinia.vuejs.org/), the intuitive, modular state management solution for Vue.
-- 🚦 **Routing and Layouts**: Utilizes Vue Router for SPA navigation and vite-plugin-vue-layouts for organizing Vue file layouts. [Vue Router](https://router.vuejs.org/) | [vite-plugin-vue-layouts](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
-- ⚡ **Next-Gen Tooling**: Powered by Vite, experience fast cold starts and instant HMR (Hot Module Replacement). [Vite](https://vitejs.dev/)
-- 🧩 **Automated Component Importing**: Streamline your workflow with unplugin-vue-components, automatically importing components as you use them. [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
-
-These features are curated to provide a seamless development experience from setup to deployment, ensuring that your Vuetify application is both powerful and maintainable.
-
-## 💡 Usage
-
-This section covers how to start the development server and build your project for production.
-
-### Starting the Development Server
-
-To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
-
-```bash
-yarn dev
+```plaintext
+.
+├── src/
+│   ├── assets/          # Arquivos estáticos (imagens, fontes, etc.)
+│   ├── components/      # Componentes Vue reutilizáveis
+│   ├── layouts/         # Layouts da aplicação (com vite-plugin-vue-layouts)
+│   ├── pages/           # Páginas principais da aplicação
+│   ├── plugins/         # Configuração de plugins Vue, como Vuetify
+│   ├── router/          # Configuração das rotas (vue-router)
+│   ├── services/        # Requisições e integração com APIs
+│   ├── store/           # Gerenciamento de estado (Pinia)
+│   ├── styles/          # Estilização global e modular
+│   ├── App.vue          # Componente raiz
+│   └── main.js          # Arquivo principal de inicialização
+├── public/              # Arquivos públicos
+├── tests/               # Testes (usando Jest)
+├── package.json         # Dependências e scripts
+├── vite.config.js       # Configurações do Vite
+└── README.md            # Documentação
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
+---
 
-> Add NODE_OPTIONS='--no-warnings' to suppress the JSON import warnings that happen as part of the Vuetify import mapping. If you are on Node [v21.3.0](https://nodejs.org/en/blog/release/v21.3.0) or higher, you can change this to NODE_OPTIONS='--disable-warning=5401'. If you don't mind the warning, you can remove this from your package.json dev script.
+## 🛠️ Tecnologias Utilizadas
 
-### Building for Production
+### Frontend
+- **Vue 3**: Framework principal
+- **Vuetify 3**: Biblioteca de componentes de UI
+- **Pinia**: Gerenciamento de estado
+- **Vue Router**: Gerenciamento de rotas
+- **axios**: Comunicação com APIs
+- **vue3-infinite-loading**: Scroll infinito
 
-To build your project for production, use:
+### Ferramentas
+- **Vite**: Build tool moderna e rápida
+- **Jest**: Testes de unidade
+- **ESLint**: Padronização de código
+- **Sass**: Estilização avançada
+
+---
+
+## 🚀 Como executar o projeto
+
+### 1️⃣ Pré-requisitos
+
+- Node.js 16+
+- Gerenciador de pacotes (npm ou yarn)
+
+### 2️⃣ Instalação
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/seu-usuario/mainoTestPoke.git
+   cd mainoTestPoke
+   ```
+
+2. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+### 3️⃣ Executando a aplicação
+
+Inicie o servidor de desenvolvimento:
 
 ```bash
-yarn build
+npm run dev
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
+Acesse no navegador: [http://localhost:5173](http://localhost:5173).
 
-Once the build process is completed, your application will be ready for deployment in a production environment.
+### 4️⃣ Construindo para produção
 
-## 💪 Support Vuetify Development
+Gere os arquivos otimizados:
 
-This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library with a comprehensive collection of Vue components. Vuetify is an MIT licensed Open Source project that has been made possible due to the generous contributions by our [sponsors and backers](https://vuetifyjs.com/introduction/sponsors-and-backers/). If you are interested in supporting this project, please consider:
+```bash
+npm run build
+```
 
-- [Requesting Enterprise Support](https://support.vuetifyjs.com/)
-- [Sponsoring John on Github](https://github.com/users/johnleider/sponsorship)
-- [Sponsoring Kael on Github](https://github.com/users/kaelwd/sponsorship)
-- [Supporting the team on Open Collective](https://opencollective.com/vuetify)
-- [Becoming a sponsor on Patreon](https://www.patreon.com/vuetify)
-- [Becoming a subscriber on Tidelift](https://tidelift.com/subscription/npm/vuetify)
-- [Making a one-time donation with Paypal](https://paypal.me/vuetify)
+---
 
-## 📑 License
-[MIT](http://opensource.org/licenses/MIT)
+## 🧪 Testes
 
-Copyright (c) 2016-present Vuetify, LLC
+Este projeto utiliza **Jest** para testes de unidade. Para executar os testes:
+
+```bash
+npm run test
+```
+
+---
+
+## 🌐 Endpoints Utilizados
+
+### **PokeAPI**
+
+- **Listagem de Pokémon**: [https://pokeapi.co/api/v2/pokemon](https://pokeapi.co/api/v2/pokemon)
+- **Detalhes do Pokémon**: [https://pokeapi.co/api/v2/pokemon/{id}](https://pokeapi.co/api/v2/pokemon/{id})
+
+---
+
+## 📜 Scripts Disponíveis
+
+- **`npm run dev`**: Inicia o servidor de desenvolvimento.
+- **`npm run build`**: Gera os arquivos otimizados para produção.
+- **`npm run preview`**: Inicia o servidor local para pré-visualizar o build.
+- **`npm run lint`**: Corrige problemas de lint.
+- **`npm run test`**: Executa os testes unitários.
+
+---
+
+## 📧 Contato
+
+Criado por **Lucas Emanuel Barboza Santos**.  
+[LinkedIn](https://linkedin.com/in/lucasebsantos) | [GitHub](https://github.com/dore4n)
+
+---
+
+### 🌟 Agradecimentos
+
+Agradecimentos à [PokeAPI](https://pokeapi.co/) pelo fornecimento de dados e à comunidade Vue/Vuetify pelos recursos incríveis para desenvolvedores.
